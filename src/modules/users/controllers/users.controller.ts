@@ -10,6 +10,7 @@ export class UsersController {
 
     @Get()
     getAll(){
+        console.log("wtf");
         return this.usersService.findAll();
     }
 
