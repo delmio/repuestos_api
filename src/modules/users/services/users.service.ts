@@ -9,8 +9,8 @@ export class UsersService {
         @InjectRepository(User) private userRepository: Repository<User>
     ) {}
 
-    findAll(){
-        return this.userRepository.find();
+    async findAll(){
+        return await this.userRepository.find();
     }
 
     create(body: any){

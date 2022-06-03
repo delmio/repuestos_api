@@ -1,6 +1,13 @@
 import { Body, Controller, Delete, Get, Post, Put } from '@nestjs/common';
 import { UsersService } from '../services/users.service';
 
+var resp = {
+    ok: false,
+    error: null,
+    status: null,
+    result: null
+}
+
 @Controller('api/users')
 export class UsersController {
 
@@ -9,9 +16,19 @@ export class UsersController {
     ) {}
 
     @Get()
-    getAll(){
-        console.log("wtf");
-        return this.usersService.findAll();
+    async getAll(){
+
+        await this.usersService.findAll().then((r)=>{
+            resp.result = r;
+            resp.status = 200;
+            resp.ok = true;
+        }).catch((err)=>{
+            resp.status = 500;
+            resp.error = err;
+        })
+
+        return resp;
+  
     }
 
     @Post()
