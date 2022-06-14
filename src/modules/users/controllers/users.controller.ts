@@ -36,19 +36,37 @@ export class UsersController {
     @Post()
     async create(@Body() body: any){
 
-        await this.usersService.create(body).then((responseUser)=>{
-            this.profileService.create(responseUser.id, body.perfiles.administrador).then((responseProfile)=>{
-                resp.result = responseUser;
-                resp.status = 200;
-                resp.ok = true;
-            }).catch((err)=>{
+        await this.usersService.findOneByRut(body.run).then((responseFindUser)=>{
+
+            if(responseFindUser != null || responseFindUser != undefined){
+
                 resp.status = 500;
-                resp.error = err;
-            })
+                resp.error = 'duplicated user';
+
+            }else{
+
+                this.usersService.create(body).then((responseUser)=>{
+                    this.profileService.create(responseUser.id, body.perfiles.administrador).then((responseProfile)=>{
+                        resp.result = responseUser;
+                        resp.status = 200;
+                        resp.ok = true;
+                    }).catch((err)=>{
+                        resp.status = 500;
+                        resp.error = err;
+                    })
+                }).catch((err)=>{
+                    resp.status = 500;
+                    resp.error = err;
+                });
+
+            }
+
         }).catch((err)=>{
+
             resp.status = 500;
             resp.error = err;
-        })
+
+        });
 
         return resp;
 

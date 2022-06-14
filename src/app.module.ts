@@ -5,7 +5,7 @@ const _db_ = require('../src/configs/dbconfig');
 
 @Module({
   imports: [
-    TypeOrmModule.forRoot(_db_.connection),
+    TypeOrmModule.forRoot(_db_.remoteConection),
     UsersModule],
   controllers: [],
   providers: [],

@@ -34,4 +34,10 @@ export class UsersService {
         return this.userRepository.save(user);
     }
 
+    async findOneByRut(_run: string){
+
+        return this.userRepository.findOne({run:_run});
+        
+    }
+
 }
