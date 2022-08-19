@@ -25,19 +25,20 @@ export class UsersService {
         return this.userRepository.save(newUser);
     }
 
-    async updateById(body: any){
-
-        const user = await this.userRepository.findOne(body.id);
-
-        this.userRepository.merge(user, body);
-        
-        return this.userRepository.save(user);
-    }
-
     async findOneByRut(_run: string){
 
         return this.userRepository.findOne({run:_run});
         
+    }
+
+    async updateUser(body: any){
+
+        const updatedUser = await this.userRepository.findOne(body.id);
+
+        this.userRepository.merge(updatedUser, body);
+        
+        return this.userRepository.save(updatedUser);
+
     }
 
 }

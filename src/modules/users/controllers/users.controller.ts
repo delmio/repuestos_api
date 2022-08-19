@@ -1,6 +1,7 @@
 import { Body, Controller, Delete, Get, Post, Put } from '@nestjs/common';
 import { UsersService } from '../services/users.service';
 import { ProfileService } from '../services/profile.service';
+import { Console } from 'console';
 
 var resp = {
     ok: false,
@@ -72,9 +73,23 @@ export class UsersController {
 
     }
 
-    @Put('/byId')
-    updateById(@Body() body: any){
-        return this.usersService.updateById(body);
+    @Put()
+    async update(@Body() body: any){
+
+        await this.usersService.updateUser(body).then((responseUserUpdated)=>{
+
+            resp.ok = true;
+            resp.status = 200;
+            resp.result = responseUserUpdated;
+
+        }).catch((err)=>{
+
+            resp.status = 500;
+            resp.error = err;
+
+        });
+
+       return resp;
     }
 
     @Delete('/byId')

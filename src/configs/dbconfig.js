@@ -25,6 +25,8 @@
         retryAttempts: 10
     }
 
+    const _var = "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";
+
 module.exports = {
     connection,
     remoteConection
